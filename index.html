@@ -48,10 +48,14 @@
 
   const tastePreference = document.getElementById("tastePreference").value;
 
+  // 構建測驗數據
   const testData = {
     userId: "user123",
     tastePreference: tastePreference
+    // 可以添加更多的測驗數據，如 pricePreference, healthAwareness, 等等
   };
+
+  console.log("測驗數據: ", testData); // 輸出將要發送的數據
 
   fetch(url, {
     method: 'POST',
@@ -60,9 +64,20 @@
     },
     body: JSON.stringify(testData)
   })
-  .then(response => response.json())
-  .then(data => console.log("測驗結果已成功存儲", data))
-  .catch(error => console.error("存儲測驗結果時出錯：", error));
+  .then(response => {
+    console.log("收到回應: ", response); // 輸出收到的回應
+    if (!response.ok) {
+      throw new Error("伺服器回應失敗");
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log("測驗結果已成功存儲: ", data); // 輸出伺服器返回的數據
+  })
+  .catch(error => {
+    console.error("存儲測驗結果時出錯：", error); // 輸出錯誤信息
+    alert("存儲測驗結果時發生錯誤：" + error.message); // 彈出提示錯誤信息
+  });
 }
   </script>
 </body>
