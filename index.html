@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>餐廳選擇測驗</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      margin: 20px;
+    }
+    form {
+      padding: 10px;
+      border: 1px solid #ccc;
+      background: #fff;
+      max-width: 400px;
+      margin: auto;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>歡迎參加餐廳選擇測驗</h1>
+  <form id="testForm">
+    <label>你喜歡濃郁的食物嗎？</label>
+    <select id="tastePreference">
+      <option value="濃郁">是</option>
+      <option value="清淡">否</option>
+    </select>
+    <br><br>
+    <button type="button" onclick="submitTest()">提交測驗</button>
+  </form>
+
+  <script>
+    const url = "https://script.google.com/macros/s/AKfycbyN0HevM7fyfEmMMD7gQB-t6No3FrCG0Obp-ogHL16O9Xxx3IDEAIv2SvBHQ_qOKSru/exec"; // Google Apps Script 部署的 URL
+
+    function submitTest() {
+      const tastePreference = document.getElementById("tastePreference").value;
+
+      const testData = {
+        userId: "user123",
+        tastePreference: tastePreference
+      };
+
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(testData)
+      })
+      .then(response => response.json())
+      .then(data => console.log("測驗結果已成功存儲", data))
+      .catch(error => console.error("存儲測驗結果時出錯：", error));
+    }
+  </script>
+</body>
+</html>
