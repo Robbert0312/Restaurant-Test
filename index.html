@@ -44,24 +44,26 @@
     const url = "https://script.google.com/macros/s/AKfycbyN0HevM7fyfEmMMD7gQB-t6No3FrCG0Obp-ogHL16O9Xxx3IDEAIv2SvBHQ_qOKSru/exec"; // Google Apps Script 部署的 URL
 
     function submitTest() {
-      const tastePreference = document.getElementById("tastePreference").value;
+  alert("測驗提交函數被觸發"); // 確認函數被調用
 
-      const testData = {
-        userId: "user123",
-        tastePreference: tastePreference
-      };
+  const tastePreference = document.getElementById("tastePreference").value;
 
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(testData)
-      })
-      .then(response => response.json())
-      .then(data => console.log("測驗結果已成功存儲", data))
-      .catch(error => console.error("存儲測驗結果時出錯：", error));
-    }
+  const testData = {
+    userId: "user123",
+    tastePreference: tastePreference
+  };
+
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(testData)
+  })
+  .then(response => response.json())
+  .then(data => console.log("測驗結果已成功存儲", data))
+  .catch(error => console.error("存儲測驗結果時出錯：", error));
+}
   </script>
 </body>
 </html>
