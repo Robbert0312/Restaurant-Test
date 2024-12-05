@@ -41,7 +41,8 @@
   </form>
 
   <script>
-    const url = "http://localhost:3000/forward-request"; // Google Apps Script 部署的 URL
+    // 定義中間層服務器的 URL（在 submitTest 函數外）
+  const proxyUrl = 'http://localhost:3000/forward-request';
 
     function submitTest() {
   alert("測驗提交函數被觸發"); // 確認函數被調用
