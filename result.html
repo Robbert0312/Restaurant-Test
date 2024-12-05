@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>測驗結果</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #f3f4f7 0%, #ffffff 100%);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+            text-align: center;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        #chartContainer {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>測驗結果</h1>
+        <p class="description" id="resultDescription">正在載入測驗結果...</p>
+        <div id="chartContainer">
+            <canvas id="resultChart" width="400" height="400"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        window.onload = function () {
+            // 取得測驗結果
+            const testResults = JSON.parse(localStorage.getItem('testResults'));
+
+            if (!testResults) {
+                document.getElementById('resultDescription').innerText = "無法找到測驗結果，請重新進行測驗。";
+                return;
+            }
+
+            // 顯示測驗結果描述
+            const resultDescription = getResultDescription(testResults);
+            document.getElementById('resultDescription').innerText = resultDescription;
+
+            // 顯示雷達圖
+            displayResultChart(testResults);
+        };
+
+        function getResultDescription(results) {
+            // 此處可根據測驗結果計算描述
+            return "你是美食愛好者，重視味道和餐廳位置的方便性。";
+        }
+
+        function displayResultChart(scores) {
+            const ctx = document.getElementById('resultChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar', // 使用雷達圖顯示測驗結果
+                data: {
+                    labels: ['口味', '價格', '健康', '地點'],
+                    datasets: [{
+                        label: '因素得分',
+                        data: [scores.q1 || 0, scores.q2 || 0, scores.q3 || 0, scores.q4 || 0],
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        r: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
