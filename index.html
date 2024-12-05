@@ -18,14 +18,16 @@
             align-items: center;
         }
         .container {
-            background: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            max-width: 600px;
-            padding: 20px;
-            text-align: center;
-        }
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    width: 90%; /* 調整寬度為90%，使它在小螢幕上更合適 */
+    max-width: 600px;
+    padding: 20px;
+    text-align: center;
+    overflow: hidden; /* 防止內容溢出 */
+}
+
         .question {
             font-size: 1.5em;
             margin-bottom: 20px;
@@ -56,6 +58,7 @@
 </head>
 <body>
     <div class="container">
+        <form id="surveyForm">
         <!-- Page 1: 口味因素 -->
         <div id="page1" class="page">
             <div class="question">1. 你喜歡食物味道濃郁。</div>
@@ -968,51 +971,52 @@
             <button onclick="submitTest()">提交測驗</button>
         </div>
     </div>
+    </form>
     <script>
         let currentPage = 1;
 
         function nextPage() {
-            document.getElementById(`page${currentPage}`).style.display = 'none';
-            currentPage++;
-            const nextPageElement = document.getElementById(`page${currentPage}`);
-            if (nextPageElement) {
-                nextPageElement.style.display = 'block';
-            } else {
-                alert("測驗完成！即將提交...");
-                submitTest();
-            }
-        }
+    document.getElementById(`page${currentPage}`).style.display = 'none';
+    currentPage++;
+    const nextPageElement = document.getElementById(`page${currentPage}`);
+    if (nextPageElement) {
+        nextPageElement.style.display = 'block';
+    } else {
+        alert("測驗完成！即將提交...");
+        submitTest();
+    }
+}
 
         function submitTest() {
-            const formData = new FormData(document.querySelector("form"));
-            const testData = { userId: "user123" };
+    const formData = new FormData(document.getElementById("surveyForm"));
+    const testData = { userId: "user123" };
 
-            for (let [key, value] of formData.entries()) {
-                testData[key] = value;
-            }
+    for (let [key, value] of formData.entries()) {
+        testData[key] = value;
+    }
 
-            fetch('http://localhost:3000/forward-request', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(testData)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("伺服器回應失敗");
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log("測驗結果已成功存儲: ", data);
-                alert("測驗提交成功！");
-            })
-            .catch(error => {
-                console.error("存儲測驗結果時出錯：", error);
-                alert("存儲測驗結果時發生錯誤：" + error.message);
-            });
+    fetch('http://localhost:3000/forward-request', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(testData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("伺服器回應失敗");
         }
+        return response.json();
+    })
+    .then(data => {
+        console.log("測驗結果已成功存儲: ", data);
+        alert("測驗提交成功！");
+    })
+    .catch(error => {
+        console.error("存儲測驗結果時出錯：", error);
+        alert("存儲測驗結果時發生錯誤：" + error.message);
+    });
+}
     </script>
 </body>
 </html>
