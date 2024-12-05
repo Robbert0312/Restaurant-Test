@@ -1,86 +1,1018 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 <head>
-  <title>餐廳選擇測驗</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
-      color: #333;
-      margin: 20px;
-    }
-    form {
-      padding: 10px;
-      border: 1px solid #ccc;
-      background: #fff;
-      max-width: 400px;
-      margin: auto;
-    }
-    button {
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>餐廳選擇測驗</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            padding: 20px;
+            text-align: center;
+        }
+        .question {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .options {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+        }
+        .option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-  <h1>歡迎參加餐廳選擇測驗</h1>
-  <form id="testForm">
-    <label>你喜歡濃郁的食物嗎？</label>
-    <select id="tastePreference">
-      <option value="濃郁">是</option>
-      <option value="清淡">否</option>
-    </select>
-    <br><br>
-    <button type="button" onclick="submitTest()">提交測驗</button>
-  </form>
+    <div class="container">
+        <!-- Page 1: 口味因素 -->
+        <div id="page1" class="page">
+            <div class="question">1. 你喜歡食物味道濃郁。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q1" value="1" id="q1_1">
+                    <label for="q1_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q1" value="2" id="q1_2">
+                    <label for="q1_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q1" value="3" id="q1_3">
+                    <label for="q1_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q1" value="4" id="q1_4">
+                    <label for="q1_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q1" value="5" id="q1_5">
+                    <label for="q1_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q1" value="6" id="q1_6">
+                    <label for="q1_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q1" value="7" id="q1_7">
+                    <label for="q1_7">非常同意</label>
+                </div>
+            </div>
 
-  <!-- 把 JavaScript 代碼放在頁面的最底部 -->
-  <script>
-    // 通過 window 對象設置全局變量
-    window.proxyUrl = 'http://localhost:3000/forward-request';
+            <div class="question">2. 你偏好食材保持自然風味。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q2" value="1" id="q2_1">
+                    <label for="q2_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q2" value="2" id="q2_2">
+                    <label for="q2_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q2" value="3" id="q2_3">
+                    <label for="q2_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q2" value="4" id="q2_4">
+                    <label for="q2_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q2" value="5" id="q2_5">
+                    <label for="q2_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q2" value="6" id="q2_6">
+                    <label for="q2_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q2" value="7" id="q2_7">
+                    <label for="q2_7">非常同意</label>
+                </div>
+            </div>
 
-    // 提交測驗的函數
-    function submitTest() {
-      alert("測驗提交函數被觸發"); // 確認函數被調用
+            <div class="question">3. 你經常選擇有多種香料的菜餚。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q3" value="1" id="q3_1">
+                    <label for="q3_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q3" value="2" id="q3_2">
+                    <label for="q3_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q3" value="3" id="q3_3">
+                    <label for="q3_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q3" value="4" id="q3_4">
+                    <label for="q3_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q3" value="5" id="q3_5">
+                    <label for="q3_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q3" value="6" id="q3_6">
+                    <label for="q3_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q3" value="7" id="q3_7">
+                    <label for="q3_7">非常同意</label>
+                </div>
+            </div>
 
-      const tastePreference = document.getElementById("tastePreference").value;
+            <div class="question">4. 濃厚的湯讓你很滿足。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q4" value="1" id="q4_1">
+                    <label for="q4_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q4" value="2" id="q4_2">
+                    <label for="q4_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q4" value="3" id="q4_3">
+                    <label for="q4_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q4" value="4" id="q4_4">
+                    <label for="q4_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q4" value="5" id="q4_5">
+                    <label for="q4_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q4" value="6" id="q4_6">
+                    <label for="q4_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q4" value="7" id="q4_7">
+                    <label for="q4_7">非常同意</label>
+                </div>
+            </div>
 
-      // 構建測驗數據
-      const testData = {
-        userId: "user123",
-        tastePreference: tastePreference
-      };
+            <div class="question">5. 清淡的料理更符合你的口味。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q5" value="1" id="q5_1">
+                    <label for="q5_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q5" value="2" id="q5_2">
+                    <label for="q5_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q5" value="3" id="q5_3">
+                    <label for="q5_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q5" value="4" id="q5_4">
+                    <label for="q5_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q5" value="5" id="q5_5">
+                    <label for="q5_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q5" value="6" id="q5_6">
+                    <label for="q5_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q5" value="7" id="q5_7">
+                    <label for="q5_7">非常同意</label>
+                </div>
+            </div>
 
-      console.log("測驗數據: ", testData); // 輸出將要發送的數據
+            <div class="question">6. 你喜歡風味強烈的醬汁。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q6" value="1" id="q6_1">
+                    <label for="q6_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q6" value="2" id="q6_2">
+                    <label for="q6_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q6" value="3" id="q6_3">
+                    <label for="q6_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q6" value="4" id="q6_4">
+                    <label for="q6_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q6" value="5" id="q6_5">
+                    <label for="q6_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q6" value="6" id="q6_6">
+                    <label for="q6_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q6" value="7" id="q6_7">
+                    <label for="q6_7">非常同意</label>
+                </div>
+            </div>
 
-      fetch(window.proxyUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(testData)
-      })
-      .then(response => {
-        console.log("收到回應: ", response); // 輸出收到的回應
-        if (!response.ok) {
-          throw new Error("伺服器回應失敗");
+            <div class="question">7. 你更喜歡簡單輕柔的食材味道。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q7" value="1" id="q7_1">
+                    <label for="q7_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q7" value="2" id="q7_2">
+                    <label for="q7_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q7" value="3" id="q7_3">
+                    <label for="q7_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q7" value="4" id="q7_4">
+                    <label for="q7_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q7" value="5" id="q7_5">
+                    <label for="q7_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q7" value="6" id="q7_6">
+                    <label for="q7_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q7" value="7" id="q7_7">
+                    <label for="q7_7">非常同意</label>
+                </div>
+            </div>
+
+            <button onclick="nextPage()">下一步</button>
+        </div>
+
+        <!-- Page 2: 價格因素 -->
+        <div id="page2" class="page" style="display:none;">
+            <div class="question">1. 你願意為好食物支付更高的價格。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q8" value="1" id="q8_1">
+                    <label for="q8_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q8" value="2" id="q8_2">
+                    <label for="q8_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q8" value="3" id="q8_3">
+                    <label for="q8_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q8" value="4" id="q8_4">
+                    <label for="q8_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q8" value="5" id="q8_5">
+                    <label for="q8_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q8" value="6" id="q8_6">
+                    <label for="q8_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q8" value="7" id="q8_7">
+                    <label for="q8_7">非常同意</label>
+                </div>
+            </div>
+
+            <div class="question">2. 你認為價格高的食物品質會更好。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q9" value="1" id="q9_1">
+                    <label for="q9_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q9" value="2" id="q9_2">
+                    <label for="q9_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q9" value="3" id="q9_3">
+                    <label for="q9_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q9" value="4" id="q9_4">
+                    <label for="q9_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q9" value="5" id="q9_5">
+                    <label for="q9_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q9" value="6" id="q9_6">
+                    <label for="q9_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q9" value="7" id="q9_7">
+                    <label for="q9_7">非常同意</label>
+                </div>
+            </div>
+
+            <div class="question">3. 你覺得物有所值比便宜更重要。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q10" value="1" id="q10_1">
+                    <label for="q10_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q10" value="2" id="q10_2">
+                    <label for="q10_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q10" value="3" id="q10_3">
+                    <label for="q10_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q10" value="4" id="q10_4">
+                    <label for="q10_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q10" value="5" id="q10_5">
+                    <label for="q10_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q10" value="6" id="q10_6">
+                    <label for="q10_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q10" value="7" id="q10_7">
+                    <label for="q10_7">非常同意</label>
+                </div>
+            </div>
+
+            <div class="question">4. 只要評價好，即使價格高，你也會選擇。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q11" value="1" id="q11_1">
+                    <label for="q11_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q11" value="2" id="q11_2">
+                    <label for="q11_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q11" value="3" id="q11_3">
+                    <label for="q11_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q11" value="4" id="q11_4">
+                    <label for="q11_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q11" value="5" id="q11_5">
+                    <label for="q11_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q11" value="6" id="q11_6">
+                    <label for="q11_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q11" value="7" id="q11_7">
+                    <label for="q11_7">非常同意</label>
+                </div>
+            </div>
+
+            <div class="question">5. 你會為特別的用餐體驗花更多錢。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q12" value="1" id="q12_1">
+                    <label for="q12_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q12" value="2" id="q12_2">
+                    <label for="q12_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q12" value="3" id="q12_3">
+                    <label for="q12_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q12" value="4" id="q12_4">
+                    <label for="q12_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q12" value="5" id="q12_5">
+                    <label for="q12_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q12" value="6" id="q12_6">
+                    <label for="q12_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q12" value="7" id="q12_7">
+                    <label for="q12_7">非常同意</label>
+                </div>
+            </div>
+
+            <div class="question">6. 你更傾向於選擇價格合理的餐廳，即使品質一般。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q13" value="1" id="q13_1">
+                    <label for="q13_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q13" value="2" id="q13_2">
+                    <label for="q13_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q13" value="3" id="q13_3">
+                    <label for="q13_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q13" value="4" id="q13_4">
+                    <label for="q13_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q13" value="5" id="q13_5">
+                    <label for="q13_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q13" value="6" id="q13_6">
+                    <label for="q13_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q13" value="7" id="q13_7">
+                    <label for="q13_7">非常同意</label>
+                </div>
+            </div>
+
+            <div class="question">7. 你覺得食物價格不應過高，最重要的是經濟實惠。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q14" value="1" id="q14_1">
+                    <label for="q14_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q14" value="2" id="q14_2">
+                    <label for="q14_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q14" value="3" id="q14_3">
+                    <label for="q14_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q14" value="4" id="q14_4">
+                    <label for="q14_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q14" value="5" id="q14_5">
+                    <label for="q14_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q14" value="6" id="q14_6">
+                    <label for="q14_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q14" value="7" id="q14_7">
+                    <label for="q14_7">非常同意</label>
+                </div>
+            </div>
+
+            <button onclick="nextPage()">下一步</button>
+        </div>
+
+        <!-- Page 3: 健康因素 -->
+        <div id="page3" class="page" style="display:none;">
+            <div class="question">1. 你會選擇標有健康標籤的菜品。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q15" value="1" id="q15_1">
+                    <label for="q15_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q15" value="2" id="q15_2">
+                    <label for="q15_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q15" value="3" id="q15_3">
+                    <label for="q15_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q15" value="4" id="q15_4">
+                    <label for="q15_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q15" value="5" id="q15_5">
+                    <label for="q15_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q15" value="6" id="q15_6">
+                    <label for="q15_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q15" value="7" id="q15_7">
+                    <label for="q15_7">非常同意</label>
+                </div>
+            </div>
+
+            <div class="question">2. 有機食品對你來說更有吸引力。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q16" value="1" id="q16_1">
+                    <label for="q16_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q16" value="2" id="q16_2">
+                    <label for="q16_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q16" value="3" id="q16_3">
+                    <label for="q16_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q16" value="4" id="q16_4">
+                    <label for="q16_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q16" value="5" id="q16_5">
+                    <label for="q16_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q16" value="6" id="q16_6">
+                    <label for="q16_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q16" value="7" id="q16_7">
+                    <label for="q16_7">非常同意</label>
+                </div>
+            </div>
+
+            <div class="question">3. 即使味道不如其他選擇，你也會選擇卡路里低的餐點。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q17" value="1" id="q17_1">
+                    <label for="q17_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q17" value="2" id="q17_2">
+                    <label for="q17_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q17" value="3" id="q17_3">
+                    <label for="q17_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q17" value="4" id="q17_4">
+                    <label for="q17_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q17" value="5" id="q17_5">
+                    <label for="q17_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q17" value="6" id="q17_6">
+                    <label for="q17_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q17" value="7" id="q17_7">
+                    <label for="q17_7">非常同意</label>
+                </div>
+            </div>
+
+            <div class="question">4. 你喜歡多吃新鮮蔬菜。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q18" value="1" id="q18_1">
+                    <label for="q18_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q18" value="2" id="q18_2">
+                    <label for="q18_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q18" value="3" id="q18_3">
+                    <label for="q18_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q18" value="4" id="q18_4">
+                    <label for="q18_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q18" value="5" id="q18_5">
+                    <label for="q18_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q18" value="6" id="q18_6">
+                    <label for="q18_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q18" value="7" id="q18_7">
+                    <label for="q18_7">非常同意</label>
+                </div>
+            </div>
+
+            <div class="question">5. 你不太關心食物的健康標籤或卡路里。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q19" value="1" id="q19_1">
+                    <label for="q19_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q19" value="2" id="q19_2">
+                    <label for="q19_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q19" value="3" id="q19_3">
+                    <label for="q19_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q19" value="4" id="q19_4">
+                    <label for="q19_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q19" value="5" id="q19_5">
+                    <label for="q19_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q19" value="6" id="q19_6">
+                    <label for="q19_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q19" value="7" id="q19_7">
+                    <label for="q19_7">非常同意</label>
+                </div>
+            </div>
+
+            <div class="question">6. 你更在意食物的美味，而不是它是否健康。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q20" value="1" id="q20_1">
+                    <label for="q20_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q20" value="2" id="q20_2">
+                    <label for="q20_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q20" value="3" id="q20_3">
+                    <label for="q20_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q20" value="4" id="q20_4">
+                    <label for="q20_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q20" value="5" id="q20_5">
+                    <label for="q20_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q20" value="6" id="q20_6">
+                    <label for="q20_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q20" value="7" id="q20_7">
+                    <label for="q20_7">非常同意</label>
+                </div>
+            </div><div class="question">7. 加工食品對你來說沒有什麼問題，只要好吃就行。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q21" value="1" id="q21_1">
+                    <label for="q21_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q21" value="2" id="q21_2">
+                    <label for="q21_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q21" value="3" id="q21_3">
+                    <label for="q21_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q21" value="4" id="q21_4">
+                    <label for="q21_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q21" value="5" id="q21_5">
+                    <label for="q21_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q21" value="6" id="q21_6">
+                    <label for="q21_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q21" value="7" id="q21_7">
+                    <label for="q21_7">非常同意</label>
+                </div>
+            </div>
+
+            <button onclick="nextPage()">下一步</button>
+        </div>
+ <!-- Page 4: 地點因素 -->
+        <div id="page4" class="page" style="display:none;">
+            <div class="question">1. 你願意花 1 小時的時間去一間特別的餐廳用餐。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q22" value="1" id="q22_1">
+                    <label for="q22_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q22" value="2" id="q22_2">
+                    <label for="q22_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q22" value="3" id="q22_3">
+                    <label for="q22_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q22" value="4" id="q22_4">
+                    <label for="q22_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q22" value="5" id="q22_5">
+                    <label for="q22_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q22" value="6" id="q22_6">
+                    <label for="q22_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q22" value="7" id="q22_7">
+                    <label for="q22_7">非常同意</label>
+                </div>
+            </div>
+
+            <div class="question">2. 你會為推薦的餐廳長途跋涉。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q23" value="1" id="q23_1">
+                    <label for="q23_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q23" value="2" id="q23_2">
+                    <label for="q23_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q23" value="3" id="q23_3">
+                    <label for="q23_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q23" value="4" id="q23_4">
+                    <label for="q23_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q23" value="5" id="q23_5">
+                    <label for="q23_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q23" value="6" id="q23_6">
+                    <label for="q23_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q23" value="7" id="q23_7">
+                    <label for="q23_7">非常同意</label>
+                </div>
+            </div>
+
+            <div class="question">3. 你更傾向選擇方便到達的餐廳。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q24" value="1" id="q24_1">
+                    <label for="q24_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q24" value="2" id="q24_2">
+                    <label for="q24_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q24" value="3" id="q24_3">
+                    <label for="q24_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q24" value="4" id="q24_4">
+                    <label for="q24_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q24" value="5" id="q24_5">
+                    <label for="q24_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q24" value="6" id="q24_6">
+                    <label for="q24_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q24" value="7" id="q24_7">
+                    <label for="q24_7">非常同意</label>
+                </div>
+            </div>
+
+            <div class="question">4. 即使餐廳位置偏遠，只要提供特別的風味或體驗，你也會願意去。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q25" value="1" id="q25_1">
+                    <label for="q25_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q25" value="2" id="q25_2">
+                    <label for="q25_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q25" value="3" id="q25_3">
+                    <label for="q25_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q25" value="4" id="q25_4">
+                    <label for="q25_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q25" value="5" id="q25_5">
+                    <label for="q25_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q25" value="6" id="q25_6">
+                    <label for="q25_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q25" value="7" id="q25_7">
+                    <label for="q25_7">非常同意</label>
+                </div>
+            </div>
+
+            <div class="question">5. 距離遠的餐廳對你來說是很大的不便。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q26" value="1" id="q26_1">
+                    <label for="q26_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q26" value="2" id="q26_2">
+                    <label for="q26_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q26" value="3" id="q26_3">
+                    <label for="q26_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q26" value="4" id="q26_4">
+                    <label for="q26_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q26" value="5" id="q26_5">
+                    <label for="q26_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q26" value="6" id="q26_6">
+                    <label for="q26_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q26" value="7" id="q26_7">
+                    <label for="q26_7">非常同意</label>
+                </div>
+            </div>
+
+            <div class="question">6. 你通常選擇距離近且方便的餐廳。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q27" value="1" id="q27_1">
+                    <label for="q27_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q27" value="2" id="q27_2">
+                    <label for="q27_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q27" value="3" id="q27_3">
+                    <label for="q27_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q27" value="4" id="q27_4">
+                    <label for="q27_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q27" value="5" id="q27_5">
+                    <label for="q27_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q27" value="6" id="q27_6">
+                    <label for="q27_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q27" value="7" id="q27_7">
+                    <label for="q27_7">非常同意</label>
+                </div>
+            </div>
+<div class="question">7. 你不喜歡為了吃飯而花費太多時間在交通上。</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q28" value="1" id="q28_1">
+                    <label for="q28_1">非常不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q28" value="2" id="q28_2">
+                    <label for="q28_2">不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q28" value="3" id="q28_3">
+                    <label for="q28_3">稍微不同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q28" value="4" id="q28_4">
+                    <label for="q28_4">中立</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q28" value="5" id="q28_5">
+                    <label for="q28_5">稍微同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q28" value="6" id="q28_6">
+                    <label for="q28_6">同意</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q28" value="7" id="q28_7">
+                    <label for="q28_7">非常同意</label>
+                </div>
+            </div>
+
+            <button onclick="submitTest()">提交測驗</button>
+        </div>
+    </div>
+    <script>
+        let currentPage = 1;
+
+        function nextPage() {
+            document.getElementById(`page${currentPage}`).style.display = 'none';
+            currentPage++;
+            const nextPageElement = document.getElementById(`page${currentPage}`);
+            if (nextPageElement) {
+                nextPageElement.style.display = 'block';
+            } else {
+                alert("測驗完成！即將提交...");
+                submitTest();
+            }
         }
-        return response.json();
-      })
-      .then(data => {
-        console.log("測驗結果已成功存儲: ", data); // 輸出伺服器返回的數據
-      })
-      .catch(error => {
-        console.error("存儲測驗結果時出錯：", error); // 輸出錯誤信息
-        alert("存儲測驗結果時發生錯誤：" + error.message); // 彈出提示錯誤信息
-      });
-    }
-  </script>
+
+        function submitTest() {
+            const formData = new FormData(document.querySelector("form"));
+            const testData = { userId: "user123" };
+
+            for (let [key, value] of formData.entries()) {
+                testData[key] = value;
+            }
+
+            fetch('http://localhost:3000/forward-request', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(testData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("伺服器回應失敗");
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("測驗結果已成功存儲: ", data);
+                alert("測驗提交成功！");
+            })
+            .catch(error => {
+                console.error("存儲測驗結果時出錯：", error);
+                alert("存儲測驗結果時發生錯誤：" + error.message);
+            });
+        }
+    </script>
 </body>
 </html>
