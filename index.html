@@ -42,8 +42,8 @@
 
   <!-- 把 JavaScript 代碼放在頁面的最底部 -->
   <script>
-    // 定義中間層服務器的 URL
-    const proxyUrl = 'http://localhost:3000/forward-request';
+    // 通過 window 對象設置全局變量
+    window.proxyUrl = 'http://localhost:3000/forward-request';
 
     // 提交測驗的函數
     function submitTest() {
@@ -59,7 +59,7 @@
 
       console.log("測驗數據: ", testData); // 輸出將要發送的數據
 
-      fetch(proxyUrl, {
+      fetch(window.proxyUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
