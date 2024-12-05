@@ -40,46 +40,47 @@
     <button type="button" onclick="submitTest()">提交測驗</button>
   </form>
 
+  <!-- 把 JavaScript 代碼放在頁面的最底部 -->
   <script>
-    // 定義中間層服務器的 URL（在 submitTest 函數外）
-  const proxyUrl = 'http://localhost:3000/forward-request';
+    // 定義中間層服務器的 URL
+    const proxyUrl = 'http://localhost:3000/forward-request';
 
+    // 提交測驗的函數
     function submitTest() {
-  alert("測驗提交函數被觸發"); // 確認函數被調用
+      alert("測驗提交函數被觸發"); // 確認函數被調用
 
-  const tastePreference = document.getElementById("tastePreference").value;
+      const tastePreference = document.getElementById("tastePreference").value;
 
-  // 構建測驗數據
-  const testData = {
-    userId: "user123",
-    tastePreference: tastePreference
-    // 可以添加更多的測驗數據，如 pricePreference, healthAwareness, 等等
-  };
+      // 構建測驗數據
+      const testData = {
+        userId: "user123",
+        tastePreference: tastePreference
+      };
 
-  console.log("測驗數據: ", testData); // 輸出將要發送的數據
+      console.log("測驗數據: ", testData); // 輸出將要發送的數據
 
-  fetch(proxyUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(testData)
-  })
-  .then(response => {
-    console.log("收到回應: ", response); // 輸出收到的回應
-    if (!response.ok) {
-      throw new Error("伺服器回應失敗");
+      fetch(proxyUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(testData)
+      })
+      .then(response => {
+        console.log("收到回應: ", response); // 輸出收到的回應
+        if (!response.ok) {
+          throw new Error("伺服器回應失敗");
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log("測驗結果已成功存儲: ", data); // 輸出伺服器返回的數據
+      })
+      .catch(error => {
+        console.error("存儲測驗結果時出錯：", error); // 輸出錯誤信息
+        alert("存儲測驗結果時發生錯誤：" + error.message); // 彈出提示錯誤信息
+      });
     }
-    return response.json();
-  })
-  .then(data => {
-    console.log("測驗結果已成功存儲: ", data); // 輸出伺服器返回的數據
-  })
-  .catch(error => {
-    console.error("存儲測驗結果時出錯：", error); // 輸出錯誤信息
-    alert("存儲測驗結果時發生錯誤：" + error.message); // 彈出提示錯誤信息
-  });
-}
   </script>
 </body>
 </html>
