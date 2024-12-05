@@ -695,32 +695,32 @@
         Q25: testData.q25, Q26: testData.q26, Q27: testData.q27, Q28: testData.q28
     };
 
-    // 發送數據到 NodeMJS 中間層
-    fetch('http://localhost:3000/forward', {
+    // 發送數據到中間層服務器 (NodeMJS)
+    fetch('http://localhost:3000/forward-request', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(sheetData)
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("伺服器回應失敗");
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log("測驗結果已成功存儲: ", data);
-        alert("測驗提交成功！");
-    })
-    .catch(error => {
-        console.error("存儲測驗結果時出錯：", error);
-        alert("存儲測驗結果時發生錯誤：" + error.message);
-    })
-    .finally(() => {
-        // 恢復提交按鈕狀態
-        submitButton.disabled = false;
-    });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("伺服器回應失敗");
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("測驗結果已成功存儲: ", data);
+            alert("測驗提交成功！");
+        })
+        .catch(error => {
+            console.error("存儲測驗結果時出錯：", error);
+            alert("存儲測驗結果時發生錯誤：" + error.message);
+        })
+        .finally(() => {
+            // 恢復提交按鈕狀態
+            submitButton.disabled = false;
+        });
 }
     // 因素名稱翻譯
     function translateFactor(factor) {
