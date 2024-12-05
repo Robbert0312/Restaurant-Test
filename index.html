@@ -569,14 +569,35 @@
      <script>
         let currentPage = 1;
 
-        function nextPage() {
-            document.getElementById(`page${currentPage}`).style.display = 'none';
-            currentPage++;
-            const nextPageElement = document.getElementById(`page${currentPage}`);
-            if (nextPageElement) {
-                nextPageElement.style.display = 'block';
-            }
+    function nextPage() {
+        document.getElementById(`page${currentPage}`).style.display = 'none';
+        currentPage++;
+        const nextPageElement = document.getElementById(`page${currentPage}`);
+        if (nextPageElement) {
+            nextPageElement.style.display = 'block';
         }
+    }
+
+    function selectPoint(element, question) {
+        // 取得所有該題目的點選項
+        const allPoints = element.parentNode.querySelectorAll('.point');
+        
+        // 移除所有點的選擇狀態
+        allPoints.forEach(point => point.classList.remove('selected'));
+        
+        // 添加選擇狀態到當前點
+        element.classList.add('selected');
+
+        // 將選擇的值存入表單中的隱藏輸入欄位
+        let input = document.querySelector(`input[name="${question}"]`);
+        if (!input) {
+            input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = question;
+            document.getElementById('surveyForm').appendChild(input);
+        }
+        input.value = element.getAttribute('data-value');
+    }
 
         function submitTest() {
             // 禁用提交按鈕以防止重複點擊
