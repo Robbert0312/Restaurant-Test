@@ -660,9 +660,7 @@ function submitTest() {
 
     // 取得表單數據
     const formData = new FormData(document.getElementById("surveyForm"));
-    const testData = {
-        userId: "user123" // 用戶ID可以在這裡填寫實際的ID
-    };
+    const testData = {};
 
     for (let [key, value] of formData.entries()) {
         testData[key] = parseInt(value);
@@ -1019,7 +1017,7 @@ function getTruffleHunterDescription(priceScore, locationScore) {
         Q25: testData.q25, Q26: testData.q26, Q27: testData.q27, Q28: testData.q28
     };
 
-    // 發送數據到中間層服務器 (NodeMJS)
+   // 發送數據到中間層服務器 (NodeMJS)
     fetch('http://localhost:3000/forward-request', {
         method: 'POST',
         headers: {
@@ -1035,7 +1033,12 @@ function getTruffleHunterDescription(priceScore, locationScore) {
         })
         .then(data => {
             console.log("測驗結果已成功存儲: ", data);
-            alert("測驗提交成功！");
+
+            // 將測驗結果存儲到本地儲存中，這樣可以在結果頁面顯示
+            localStorage.setItem('testResults', JSON.stringify(scores));
+
+            // 重定向到結果頁面
+            window.location.href = "result.html";
         })
         .catch(error => {
             console.error("存儲測驗結果時出錯：", error);
