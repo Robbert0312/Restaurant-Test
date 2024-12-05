@@ -604,125 +604,124 @@
 
     // 提交測驗函數
     function submitTest() {
-        // 禁用提交按鈕以防止重複點擊
-        const submitButton = document.querySelector('button[onclick="submitTest()"]');
-        submitButton.disabled = true;
+    // 禁用提交按鈕以防止重複點擊
+    const submitButton = document.querySelector('button[onclick="submitTest()"]');
+    submitButton.disabled = true;
 
-        // 取得表單數據
-        const formData = new FormData(document.getElementById("surveyForm"));
-        const testData = {
-            userId: "user123" // 用戶ID可以在這裡填寫實際的ID
-        };
+    // 取得表單數據
+    const formData = new FormData(document.getElementById("surveyForm"));
+    const testData = {
+        userId: "user123" // 用戶ID可以在這裡填寫實際的ID
+    };
 
-        for (let [key, value] of formData.entries()) {
-            testData[key] = parseInt(value);
-        }
-
-        // 題目加權設計
-        const questionWeights = {
-            q1: 0.7, q2: 0.5, q3: 0.6, q4: 0.8, q5: 0.9, q6: 0.6, q7: 0.5,
-            q8: 0.8, q9: 0.7, q10: 0.6, q11: 0.9, q12: 0.7, q13: 0.6, q14: 0.5,
-            q15: 0.8, q16: 0.7, q17: 0.5, q18: 0.6, q19: 0.7, q20: 0.6, q21: 0.9,
-            q22: 0.7, q23: 0.8, q24: 0.6, q25: 0.7, q26: 0.8, q27: 0.5, q28: 0.6
-        };
-
-        // 計算每個因素的得分
-        let scores = {
-            taste: 0,
-            price: 0,
-            health: 0,
-            location: 0
-        };
-        let questionCount = {
-            taste: 0,
-            price: 0,
-            health: 0,
-            location: 0
-        };
-
-        // 分數累加
-        for (let question in testData) {
-            if (question.startsWith('q')) {
-                const score = testData[question];
-                const weight = questionWeights[question];
-
-                if (['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7'].includes(question)) {
-                    scores.taste += score * weight;
-                    questionCount.taste++;
-                } else if (['q8', 'q9', 'q10', 'q11', 'q12', 'q13', 'q14'].includes(question)) {
-                    scores.price += score * weight;
-                    questionCount.price++;
-                } else if (['q15', 'q16', 'q17', 'q18', 'q19', 'q20', 'q21'].includes(question)) {
-                    scores.health += score * weight;
-                    questionCount.health++;
-                } else if (['q22', 'q23', 'q24', 'q25', 'q26', 'q27', 'q28'].includes(question)) {
-                    scores.location += score * weight;
-                    questionCount.location++;
-                }
-            }
-        }
-
-        // 計算各因素的平均得分
-        scores.taste = scores.taste / questionCount.taste;
-        scores.price = scores.price / questionCount.price;
-        scores.health = scores.health / questionCount.health;
-        scores.location = scores.location / questionCount.location;
-
-        // 排序得分並找出最高的兩個因素
-        let sortedFactors = Object.keys(scores).sort((a, b) => scores[b] - scores[a]);
-
-        // 顯示結果
-        const resultText = `你的選餐廳考量是: ${sortedFactors.map(factor => translateFactor(factor)).join(' → ')}`;
-        document.getElementById("result").innerText = resultText;
-
-        // 顯示條狀圖
-        displayBarChart(scores);
-
-        // 準備發送到 Google Sheets 的數據
-        const sheetData = {
-            Timestamp: new Date().toISOString(),
-            UserID: testData.userId,
-            口味: scores.taste.toFixed(2),
-            價格: scores.price.toFixed(2),
-            健康: scores.health.toFixed(2),
-            地點: scores.location.toFixed(2),
-            Q1: testData.q1, Q2: testData.q2, Q3: testData.q3, Q4: testData.q4,
-            Q5: testData.q5, Q6: testData.q6, Q7: testData.q7, Q8: testData.q8,
-            Q9: testData.q9, Q10: testData.q10, Q11: testData.q11, Q12: testData.q12,
-            Q13: testData.q13, Q14: testData.q14, Q15: testData.q15, Q16: testData.q16,
-            Q17: testData.q17, Q18: testData.q18, Q19: testData.q19, Q20: testData.q20,
-            Q21: testData.q21, Q22: testData.q22, Q23: testData.q23, Q24: testData.q24,
-            Q25: testData.q25, Q26: testData.q26, Q27: testData.q27, Q28: testData.q28
-        };
-
-        // 發送數據到 Google Apps Script
-        fetch('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(sheetData)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("伺服器回應失敗");
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log("測驗結果已成功存儲: ", data);
-                alert("測驗提交成功！");
-            })
-            .catch(error => {
-                console.error("存儲測驗結果時出錯：", error);
-                alert("存儲測驗結果時發生錯誤：" + error.message);
-            })
-            .finally(() => {
-                // 恢復提交按鈕狀態
-                submitButton.disabled = false;
-            });
+    for (let [key, value] of formData.entries()) {
+        testData[key] = parseInt(value);
     }
 
+    // 題目加權設計
+    const questionWeights = {
+        q1: 0.7, q2: 0.5, q3: 0.6, q4: 0.8, q5: 0.9, q6: 0.6, q7: 0.5,
+        q8: 0.8, q9: 0.7, q10: 0.6, q11: 0.9, q12: 0.7, q13: 0.6, q14: 0.5,
+        q15: 0.8, q16: 0.7, q17: 0.5, q18: 0.6, q19: 0.7, q20: 0.6, q21: 0.9,
+        q22: 0.7, q23: 0.8, q24: 0.6, q25: 0.7, q26: 0.8, q27: 0.5, q28: 0.6
+    };
+
+    // 計算每個因素的得分
+    let scores = {
+        taste: 0,
+        price: 0,
+        health: 0,
+        location: 0
+    };
+    let questionCount = {
+        taste: 0,
+        price: 0,
+        health: 0,
+        location: 0
+    };
+
+    // 分數累加
+    for (let question in testData) {
+        if (question.startsWith('q')) {
+            const score = testData[question];
+            const weight = questionWeights[question];
+
+            if (['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7'].includes(question)) {
+                scores.taste += score * weight;
+                questionCount.taste++;
+            } else if (['q8', 'q9', 'q10', 'q11', 'q12', 'q13', 'q14'].includes(question)) {
+                scores.price += score * weight;
+                questionCount.price++;
+            } else if (['q15', 'q16', 'q17', 'q18', 'q19', 'q20', 'q21'].includes(question)) {
+                scores.health += score * weight;
+                questionCount.health++;
+            } else if (['q22', 'q23', 'q24', 'q25', 'q26', 'q27', 'q28'].includes(question)) {
+                scores.location += score * weight;
+                questionCount.location++;
+            }
+        }
+    }
+
+    // 計算各因素的平均得分
+    scores.taste = scores.taste / questionCount.taste;
+    scores.price = scores.price / questionCount.price;
+    scores.health = scores.health / questionCount.health;
+    scores.location = scores.location / questionCount.location;
+
+    // 排序得分並找出最高的兩個因素
+    let sortedFactors = Object.keys(scores).sort((a, b) => scores[b] - scores[a]);
+
+    // 顯示結果
+    const resultText = `你的選餐廳考量是: ${sortedFactors.map(factor => translateFactor(factor)).join(' → ')}`;
+    document.getElementById("result").innerText = resultText;
+
+    // 顯示條狀圖
+    displayBarChart(scores);
+
+    // 準備發送到 Google Sheets 的數據
+    const sheetData = {
+        Timestamp: new Date().toISOString(),
+        UserID: testData.userId,
+        口味: scores.taste.toFixed(2),
+        價格: scores.price.toFixed(2),
+        健康: scores.health.toFixed(2),
+        地點: scores.location.toFixed(2),
+        Q1: testData.q1, Q2: testData.q2, Q3: testData.q3, Q4: testData.q4,
+        Q5: testData.q5, Q6: testData.q6, Q7: testData.q7, Q8: testData.q8,
+        Q9: testData.q9, Q10: testData.q10, Q11: testData.q11, Q12: testData.q12,
+        Q13: testData.q13, Q14: testData.q14, Q15: testData.q15, Q16: testData.q16,
+        Q17: testData.q17, Q18: testData.q18, Q19: testData.q19, Q20: testData.q20,
+        Q21: testData.q21, Q22: testData.q22, Q23: testData.q23, Q24: testData.q24,
+        Q25: testData.q25, Q26: testData.q26, Q27: testData.q27, Q28: testData.q28
+    };
+
+    // 發送數據到 NodeMJS 中間層
+    fetch('http://localhost:3000/forward', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(sheetData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("伺服器回應失敗");
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("測驗結果已成功存儲: ", data);
+        alert("測驗提交成功！");
+    })
+    .catch(error => {
+        console.error("存儲測驗結果時出錯：", error);
+        alert("存儲測驗結果時發生錯誤：" + error.message);
+    })
+    .finally(() => {
+        // 恢復提交按鈕狀態
+        submitButton.disabled = false;
+    });
+}
     // 因素名稱翻譯
     function translateFactor(factor) {
         switch (factor) {
