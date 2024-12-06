@@ -1,8 +1,9 @@
 let descriptions;  // 用來儲存描述資料的全域變數
+let resultDescription;
 
 window.onload = function () {
      // Step 1: 載入 descriptions.json 文件
-    fetch('data/descriptions.json')
+    fetch('descriptions.json')
         .then(response => response.json())
         .then(data => {
             descriptions = data;  // 將描述資料存入全域變數 descriptions 中
@@ -242,9 +243,6 @@ function submitTest() {
     // 確定主要因素組合，並根據組合選擇職業和描述
     const highestFactors = determineHighestFactors(scores);
     const resultDescription = getResultDescription(highestFactors);
-    
-    // 獲取測驗結果描述
-    const resultDescription = getDescription(profession, scores);
 
     // 顯示結果
     document.getElementById("result").innerText = resultDescription;
