@@ -87,8 +87,13 @@
                 return getSommelierDescription(scores.taste, scores.price);
             } else if (factor1 === 'taste' && factor2 === 'health') {
                 return getOilTasterDescription(scores.taste, scores.health);
+            } else if (factor1 === 'taste' && factor2 === 'location') {
+                return getBrewerDescription(scores.taste, scores.location);
+            } else if (factor1 === 'price' && factor2 === 'health') {
+                return getTeaMasterDescription(scores.price, scores.health);
             } 
-            // 其他描述可以依次類推
+            // 可以根據不同的職業組合再添加更多描述
+            return '無法根據該組合找到對應的職業描述';
         }
 
         // 示例職業描述函數
@@ -97,6 +102,21 @@
             let priceLevel = priceScore > 4 ? '容忍' : '敏感';
             return `職業：侍酒師（Sommelier）
                     你喜歡${tasteLevel}的口味，並對${priceLevel}價格敏感。`;
+        }
+
+        // 其他職業描述函數的例子
+        function getOilTasterDescription(tasteScore, healthScore) {
+            let tasteLevel = tasteScore > 4 ? '濃郁' : '清淡';
+            let healthLevel = healthScore > 4 ? '健康意識高' : '健康意識低';
+            return `職業：品油師
+                    你偏愛${tasteLevel}的油，並且對健康${healthLevel}。`;
+        }
+
+        function getBrewerDescription(tasteScore, locationScore) {
+            let tasteLevel = tasteScore > 4 ? '濃郁' : '清淡';
+            let locationLevel = locationScore > 4 ? '願意遠行' : '偏好就近';
+            return `職業：釀酒師
+                    你偏愛${tasteLevel}的味道，並且對地點選擇上${locationLevel}。`;
         }
 
         // Step 4: 顯示圖表
@@ -109,8 +129,18 @@
                     datasets: [{
                         label: '因素得分',
                         data: [scores.taste, scores.price, scores.health, scores.location],
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)'
+                        ],
                         borderWidth: 1
                     }]
                 },
