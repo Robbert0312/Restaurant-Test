@@ -7,41 +7,33 @@
     <title>測驗結果</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        body,
-        html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
+        body {
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #f3f4f7 0%, #ffffff 100%);
-            color: #333;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #dfe9f3 0%, #ffffff 100%);
+            color: #333;
+            text-align: center;
         }
 
-        .container {
+        .result-container {
             max-width: 800px;
-            width: 100%;
             padding: 40px;
-            text-align: center;
-            background: white;
-            border-radius: 10px;
+            background-color: #ffffff;
+            border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        h1 {
-            font-size: 2em;
+        #result-description {
+            font-size: 1.5em;
             margin-bottom: 20px;
+            color: #007bff;
         }
 
-        .description {
-            font-size: 1.2em;
-            margin-bottom: 30px;
-        }
-
-        #chartContainer {
+        #chart-container {
             width: 100%;
             max-width: 600px;
             margin: auto;
@@ -50,47 +42,73 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1>測驗結果</h1>
-        <p class="description" id="resultDescription">正在載入測驗結果...</p>
-        <div id="chartContainer">
-            <canvas id="resultChart" width="400" height="400"></canvas>
+    <div class="result-container">
+        <h2>測驗結果</h2>
+        <div id="result-description">結果載入中...</div>
+        <div id="chart-container">
+            <canvas id="barChart"></canvas>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        window.onload = function () {
-            // 取得測驗結果
-            const testResults = JSON.parse(localStorage.getItem('testResults'));
+        // Step 2: 從本地儲存中取得測驗結果並顯示
+        document.addEventListener('DOMContentLoaded', function () {
+            const scores = JSON.parse(localStorage.getItem('testResults'));
 
-            if (!testResults) {
-                document.getElementById('resultDescription').innerText = "無法找到測驗結果，請重新進行測驗。";
+            if (!scores) {
+                document.getElementById("result-description").innerText = "找不到測驗結果，請重新進行測驗。";
                 return;
             }
 
-            // 顯示測驗結果描述
-            const resultDescription = getResultDescription(testResults);
-            document.getElementById('resultDescription').innerText = resultDescription;
+            // 確定主要因素組合
+            const highestFactors = determineHighestFactors(scores);
+            const resultDescription = getResultDescription(highestFactors, scores);
 
-            // 顯示雷達圖
-            displayResultChart(testResults);
-        };
+            // 顯示結果描述
+            document.getElementById("result-description").innerText = resultDescription;
 
-        function getResultDescription(results) {
-            // 此處可根據測驗結果計算描述
-            return "你是美食愛好者，重視味道和餐廳位置的方便性。";
+            // 顯示圖表
+            displayBarChart(scores);
+        });
+
+        // Step 3: 確定主要因素組合的函數
+        function determineHighestFactors(scores) {
+            let sortedFactors = Object.keys(scores).sort((a, b) => scores[b] - scores[a]);
+            return sortedFactors.slice(0, 2); // 返回前兩個得分最高的因素
         }
 
-        function displayResultChart(scores) {
-            const ctx = document.getElementById('resultChart').getContext('2d');
+        // Step 3: 根據因素組合取得對應描述
+        function getResultDescription(highestFactors, scores) {
+            const [factor1, factor2] = highestFactors;
+
+            // 根據因素組合取得對應描述（這段代碼和前面提交的代碼相同）
+            if (factor1 === 'taste' && factor2 === 'price') {
+                return getSommelierDescription(scores.taste, scores.price);
+            } else if (factor1 === 'taste' && factor2 === 'health') {
+                return getOilTasterDescription(scores.taste, scores.health);
+            } 
+            // 其他描述可以依次類推
+        }
+
+        // 示例職業描述函數
+        function getSommelierDescription(tasteScore, priceScore) {
+            let tasteLevel = tasteScore > 4 ? '濃郁' : '清淡';
+            let priceLevel = priceScore > 4 ? '容忍' : '敏感';
+            return `職業：侍酒師（Sommelier）
+                    你喜歡${tasteLevel}的口味，並對${priceLevel}價格敏感。`;
+        }
+
+        // Step 4: 顯示圖表
+        function displayBarChart(scores) {
+            const ctx = document.getElementById('barChart').getContext('2d');
             new Chart(ctx, {
-                type: 'radar', // 使用雷達圖顯示測驗結果
+                type: 'bar',
                 data: {
                     labels: ['口味', '價格', '健康', '地點'],
                     datasets: [{
                         label: '因素得分',
-                        data: [scores.q1 || 0, scores.q2 || 0, scores.q3 || 0, scores.q4 || 0],
+                        data: [scores.taste, scores.price, scores.health, scores.location],
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         borderColor: 'rgba(75, 192, 192, 1)',
                         borderWidth: 1
@@ -98,7 +116,7 @@
                 },
                 options: {
                     scales: {
-                        r: {
+                        y: {
                             beginAtZero: true
                         }
                     }
