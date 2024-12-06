@@ -7,6 +7,7 @@
     <title>餐廳選擇測驗</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        /* 全局設置 */
         body,
         html {
             margin: 0;
@@ -21,51 +22,51 @@
             overflow: hidden;
         }
 
+        /* 容器設置 */
         .container {
-    width: 100%;
-    max-width: 800px;
-    padding: 20px;
-    text-align: center;
-    margin-top: 40px;
-    box-sizing: border-box;
-}
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
+            box-sizing: border-box;
+        }
 
-.options-container {
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 40px;
-}
+        /* 問題組樣式 */
+        .question {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
 
-.question {
-    font-size: 1.5em;
-    margin-bottom: 20px;
-    transition: opacity 0.5s ease, transform 0.5s ease;
-}
+        .question.inactive,
+        .question-group.inactive {
+            opacity: 0.4;
+            transform: scale(0.9);
+        }
 
-.question.inactive, .question-group.inactive {
-    opacity: 0.4;
-    transform: scale(0.9);
-}
-.question.current-question, .question-group.current-question {
-    opacity: 1;
-    font-weight: bold;
-    transform: scale(1);
-}
+        .question.current-question,
+        .question-group.current-question {
+            opacity: 1;
+            font-weight: bold;
+            transform: scale(1);
+        }
 
-.page {
-    opacity: 0;
-    transform: scale(0.95);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    display: none; /* 默認隱藏 */
-}
+        /* 頁面樣式 */
+        .page {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            display: none; /* 默認隱藏 */
+        }
 
-.page.active {
-    opacity: 1;
-    transform: scale(1);
-    display: block; /* 當前頁面顯示 */
-}
-        
+        .page.active {
+            opacity: 1;
+            transform: scale(1);
+            display: block; /* 當前頁面顯示 */
+        }
+
+        /* 選項容器樣式 */
         .options-container {
             display: flex;
             justify-content: space-between;
@@ -100,6 +101,7 @@
             transform: scale(1.2);
         }
 
+        /* 按鈕樣式 */
         button {
             background-color: #007bff;
             color: white;
@@ -115,6 +117,22 @@
             background-color: #0056b3;
         }
 
+        /* 動畫效果 */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* 進度條樣式 */
         #progressBar {
             width: 100%;
             height: 20px;
@@ -131,6 +149,7 @@
             transition: width 0.3s;
         }
 
+        /* 響應式樣式 */
         @media (max-width: 768px) {
             .question {
                 font-size: 1.2em;
@@ -149,6 +168,7 @@
             button {
                 font-size: 0.9em;
             }
+        }
     </style>
 </head>
 <body>
@@ -635,87 +655,62 @@
      <script>
        window.onload = function () {
     // 初始設置變量
-    let currentQuestionIndex = 0;
+    let currentIndex = 0;
     const questionGroups = document.querySelectorAll('.question-group');
+    const pages = document.querySelectorAll('.page');
     const totalQuestions = questionGroups.length;
 
-    // 初始設置第一個問題組為高亮
-    showCurrentQuestion();
-    updateProgress(); // 初始化進度條
+    console.log('Total questions:', totalQuestions); // Debug: 總問題數量
 
-    // 顯示當前的問題
-    function showCurrentQuestion() {
-        // 將所有問題設置為變淡
-        questionGroups.forEach((group) => {
-            group.classList.add('inactive');
-            group.classList.remove('current-question');
+    // 初始化設置第一個問題組為高亮
+    showCurrent();
+    updateProgress();
+
+    // 顯示當前的問題或頁面
+    function showCurrent() {
+        console.log('Showing current index:', currentIndex); // Debug: 當前顯示的問題或頁面索引
+
+        questionGroups.forEach((group, index) => {
+            group.classList.toggle('current-question', index === currentIndex);
+            group.classList.toggle('inactive', index !== currentIndex);
+
+            // 保留原有的過渡效果
+            if (index === currentIndex) {
+                group.classList.add('fade-in'); // 添加淡入效果
+            } else {
+                group.classList.remove('fade-in');
+            }
         });
 
-        // 只高亮當前的問題
-        if (currentQuestionIndex < questionGroups.length) {
-            questionGroups[currentQuestionIndex].classList.remove('inactive');
-            questionGroups[currentQuestionIndex].classList.add('current-question');
-        }
+        pages.forEach((page, index) => {
+            page.classList.toggle('active', index === currentIndex);
+        });
     }
-
-    // 下一題的函數
-    function nextQuestion() {
-        if (currentQuestionIndex < questionGroups.length - 1) {
-            // 當前問題變為淡化狀態
-            questionGroups[currentQuestionIndex].classList.add('inactive');
-            questionGroups[currentQuestionIndex].classList.remove('current-question');
-
-            // 移動到下一個問題
-            currentQuestionIndex++;
-            questionGroups[currentQuestionIndex].classList.remove('inactive');
-            questionGroups[currentQuestionIndex].classList.add('current-question');
-
-            // 更新進度條
-            updateProgress();
-        }
-    }
-           // 初始設置變量
-let currentPageIndex = 0; // 當前頁面索引，從 0 開始
-const pages = document.querySelectorAll('.page'); // 選擇所有的頁面
-
-// 初始設置第一個問題組為高亮
-document.addEventListener('DOMContentLoaded', () => {
-    showPage(currentPageIndex);
-    updateProgress(); // 初始化進度條
-});
-
-// 顯示當前的頁面
-function showPage(index) {
-    // 將所有頁面設置為淡出
-    pages.forEach((page, i) => {
-        if (i === index) {
-            // 當前頁面淡入並顯示
-            page.classList.add('active');
-        } else {
-            // 其他頁面淡出並隱藏
-            page.classList.remove('active');
-        }
-    });
-}
-
-// 下一頁的函數
-function nextPage() {
-    if (currentPageIndex < pages.length - 1) {
-        // 移動到下一個頁面
-        currentPageIndex++;
-        showPage(currentPageIndex);
-        updateProgress(); // 更新進度條
-    }
-}
 
     // 更新進度條
     function updateProgress() {
-        const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+        const progress = ((currentIndex + 1) / totalQuestions) * 100;
         document.getElementById('progress').style.width = `${progress}%`;
+        console.log('Progress updated to:', progress + '%'); // Debug: 更新進度條
+    }
+
+    // 下一題的函數
+    function next() {
+        if (currentIndex < Math.max(questionGroups.length, pages.length) - 1) {
+            console.log('Moving to next question/page. Current index:', currentIndex); // Debug: 轉到下一個問題或頁面
+
+            currentIndex++;
+            showCurrent();
+            updateProgress();
+        } else {
+            console.log('Already at the last question/page.'); // Debug: 已經到達最後一個問題或頁面
+        }
     }
 
     // 點擊選項時選擇該點
     function selectPoint(element, question) {
+        console.log('Selected option for question:', question, 'Value:', element.getAttribute('data-value')); // Debug: 選擇的問題和選項值
+
         // 移除當前選項的高亮
         const allPoints = element.parentNode.querySelectorAll('.point');
         allPoints.forEach(point => point.classList.remove('selected'));
@@ -735,22 +730,28 @@ function nextPage() {
         // 更新輸入欄位的值
         input.value = element.getAttribute('data-value');
 
+        console.log('Updated hidden input for question:', question, 'Value:', input.value); // Debug: 更新隱藏輸入欄位的值
+
         // 移動到下一個問題，並將其高亮顯示
-        if (currentQuestionIndex < questionGroups.length - 1) {
-            nextQuestion();
+        if (currentIndex < questionGroups.length - 1) {
+            next();
         }
     }
 
     // 將按鈕點擊事件附加到 "下一步" 按鈕
     const nextButton = document.querySelector('button[type="button"]');
     if (nextButton) {
-        nextButton.addEventListener('click', nextQuestion);
+        nextButton.addEventListener('click', () => {
+            console.log('"Next" button clicked'); // Debug: "下一步" 按鈕點擊
+            next();
+        });
     }
 
     // 將點擊事件綁定到每個選項上
     document.querySelectorAll('.point').forEach(point => {
         point.addEventListener('click', function () {
             const question = this.closest('.options-container').previousElementSibling.id;
+            console.log('Option clicked for question:', question); // Debug: 選項點擊事件
             selectPoint(this, question);
         });
     });
