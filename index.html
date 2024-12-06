@@ -22,27 +22,50 @@
         }
 
         .container {
-            max-width: 900px;
-            width: 100%;
-            padding: 20px;
-            text-align: center;
-            margin: auto;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background: white;
-            border-radius: 10px;
-        }
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+    box-sizing: border-box;
+}
 
-        .question {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
+.options-container {
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
 
-        .question.inactive {
-            opacity: 0.5;
-            transform: scale(0.9);
-        }
+.question {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
 
+.question.inactive, .question-group.inactive {
+    opacity: 0.4;
+    transform: scale(0.9);
+}
+.question.current-question, .question-group.current-question {
+    opacity: 1;
+    font-weight: bold;
+    transform: scale(1);
+}
+
+.page {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    display: none; /* 默認隱藏 */
+}
+
+.page.active {
+    opacity: 1;
+    transform: scale(1);
+    display: block; /* 當前頁面顯示 */
+}
+        
         .options-container {
             display: flex;
             justify-content: space-between;
@@ -126,7 +149,6 @@
             button {
                 font-size: 0.9em;
             }
-        }
     </style>
 </head>
 <body>
@@ -134,7 +156,8 @@
     <form id="surveyForm">
         <!-- Page 1 -->
         <div id="page1" class="page">
-            <div class="question">你喜歡食物味道濃郁。</div>
+            <div class="question-group">
+            <div id="q1" class="question">你喜歡食物味道濃郁。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -149,7 +172,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">你偏好食材保持自然風味。</div>
+            <div id="q2" class="question">你偏好食材保持自然風味。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -164,7 +187,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">你經常選擇有多種香料的菜餚。</div>
+            <div id="q3" class="question">你經常選擇有多種香料的菜餚。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -179,7 +202,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">濃厚的湯讓你很滿足。</div>
+            <div id="q4" class="question">濃厚的湯讓你很滿足。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -194,7 +217,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">清淡的料理更符合你的口味。</div>
+            <div id="q5" class="question">清淡的料理更符合你的口味。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -209,7 +232,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">你喜歡風味強烈的醬汁。</div>
+            <div id="q6" class="question">你喜歡風味強烈的醬汁。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -224,7 +247,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">你更喜歡簡單輕柔的食材味道。</div>
+            <div id="q7" class="question">你更喜歡簡單輕柔的食材味道。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -244,7 +267,8 @@
         
         <!-- Page 2: 價格因素 -->
        <div id="page2" class="page" style="display:none;">
-            <div class="question">你願意為好食物支付更高的價格。</div>
+           <div class="question-group">
+            <div id="q8" class="question">你願意為好食物支付更高的價格。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -259,7 +283,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">你認為價格高的食物品質會更好。</div>
+            <div id="q9" class="question">你認為價格高的食物品質會更好。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -274,7 +298,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">你覺得物有所值比便宜更重要。</div>
+            <div id="q10" class="question">你覺得物有所值比便宜更重要。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -289,7 +313,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">只要評價好，即使價格高，你也會選擇。</div>
+            <div id="q11" class="question">只要評價好，即使價格高，你也會選擇。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -304,7 +328,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">你會為特別的用餐體驗花更多錢。</div>
+            <div id="q12" class="question">你會為特別的用餐體驗花更多錢。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -319,7 +343,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">你更傾向於選擇價格合理的餐廳，即使品質一般。</div>
+            <div id="q13" class="question">你更傾向於選擇價格合理的餐廳，即使品質一般。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -334,7 +358,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">你覺得食物價格不應過高，最重要的是經濟實惠。</div>
+            <div id="q14" class="question">你覺得食物價格不應過高，最重要的是經濟實惠。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -349,7 +373,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">你不願意為一頓飯支付超出平時預算的費用。</div>
+            <div id="q15" class="question">你不願意為一頓飯支付超出平時預算的費用。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -369,7 +393,8 @@
 
         <!-- Page 3: 健康因素 -->
         <div id="page3" class="page" style="display:none;">
-            <div class="question">你會選擇標有健康標籤的菜品。</div>
+            <div class="question-group">
+            <div id="q16" class="question">你會選擇標有健康標籤的菜品。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -384,7 +409,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">有機食品對你來說更有吸引力。</div>
+            <div id="q17" class="question">有機食品對你來說更有吸引力。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -399,7 +424,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">即使味道不如其他選擇，你也會選擇卡路里低的餐點。</div>
+            <div id="q18" class="question">即使味道不如其他選擇，你也會選擇卡路里低的餐點。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -414,7 +439,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">你喜歡多吃新鮮蔬菜。</div>
+            <div id="q19" class="question">你喜歡多吃新鮮蔬菜。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -429,7 +454,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">你不太關心食物的健康標籤或卡路里。</div>
+            <div id="q20" class="question">你不太關心食物的健康標籤或卡路里。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -444,7 +469,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">你更在意食物的美味，而不是它是否健康。</div>
+            <div id="q21" class="question">你更在意食物的美味，而不是它是否健康。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -459,7 +484,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">加工食品對你來說沒有什麼問題，只要好吃就行。</div>
+            <div id="q22" class="question">加工食品對你來說沒有什麼問題，只要好吃就行。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -478,7 +503,8 @@
         </div>
  <!-- Page 4: 地點因素 -->
         <div id="page4" class="page" style="display:none;">
-            <div class="question">你願意花 1 小時的時間去一間特別的餐廳用餐。</div>
+            <div class="question-group">
+            <div id="q23" class="question">你願意花 1 小時的時間去一間特別的餐廳用餐。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -493,7 +519,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">你會為推薦的餐廳長途跋涉。</div>
+            <div id="q24" class="question">你會為推薦的餐廳長途跋涉。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -508,7 +534,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">你更傾向選擇方便到達的餐廳。</div>
+            <div id="q25" class="question">你更傾向選擇方便到達的餐廳。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -523,7 +549,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">即使餐廳位置偏遠，只要提供特別的風味或體驗，你也會願意去。</div>
+            <div id="q26" class="question">即使餐廳位置偏遠，只要提供特別的風味或體驗，你也會願意去。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -538,7 +564,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">距離遠的餐廳對你來說是很大的不便。</div>
+            <div id="q27" class="question">距離遠的餐廳對你來說是很大的不便。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -553,7 +579,7 @@
                 <div class="label-right">非常同意</div>
             </div>
 
-            <div class="question">你通常選擇距離近且方便的餐廳。</div>
+            <div id="q28" class="question">你通常選擇距離近且方便的餐廳。</div>
             <div class="options-container">
                 <div class="label-left">非常不同意</div>
                 <div class="points-container">
@@ -607,50 +633,128 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
      <script>
-        window.onload = function () {
-            let currentQuestion = 1;
-            const totalQuestions = document.querySelectorAll('.question').length;
+       window.onload = function () {
+    // 初始設置變量
+    let currentQuestionIndex = 0;
+    const questionGroups = document.querySelectorAll('.question-group');
+    const totalQuestions = questionGroups.length;
 
-            // 下一題的函數
-            function nextQuestion() {
-                // 設定當前題目為淡化
-                document.getElementById(`q${currentQuestion}`).classList.add('inactive');
-                document.getElementById(`options${currentQuestion}`).classList.add('inactive');
+    // 初始設置第一個問題組為高亮
+    showCurrentQuestion();
+    updateProgress(); // 初始化進度條
 
-                // 前往下一題
-                currentQuestion++;
+    // 顯示當前的問題
+    function showCurrentQuestion() {
+        // 將所有問題設置為變淡
+        questionGroups.forEach((group) => {
+            group.classList.add('inactive');
+            group.classList.remove('current-question');
+        });
 
-                if (currentQuestion <= totalQuestions) {
-                    // 設定新題目為高亮
-                    document.getElementById(`q${currentQuestion}`).classList.remove('inactive');
-                    document.getElementById(`options${currentQuestion}`).classList.remove('inactive');
+        // 只高亮當前的問題
+        if (currentQuestionIndex < questionGroups.length) {
+            questionGroups[currentQuestionIndex].classList.remove('inactive');
+            questionGroups[currentQuestionIndex].classList.add('current-question');
+        }
+    }
 
-                    // 更新進度條
-                    updateProgress();
-                }
-            }
+    // 下一題的函數
+    function nextQuestion() {
+        if (currentQuestionIndex < questionGroups.length - 1) {
+            // 當前問題變為淡化狀態
+            questionGroups[currentQuestionIndex].classList.add('inactive');
+            questionGroups[currentQuestionIndex].classList.remove('current-question');
+
+            // 移動到下一個問題
+            currentQuestionIndex++;
+            questionGroups[currentQuestionIndex].classList.remove('inactive');
+            questionGroups[currentQuestionIndex].classList.add('current-question');
 
             // 更新進度條
-            function updateProgress() {
-                const progress = (currentQuestion / totalQuestions) * 100;
-                document.getElementById('progress').style.width = `${progress}%`;
-            }
+            updateProgress();
+        }
+    }
+           // 初始設置變量
+let currentPageIndex = 0; // 當前頁面索引，從 0 開始
+const pages = document.querySelectorAll('.page'); // 選擇所有的頁面
 
-            // 點擊選項時選擇該點
-            function selectPoint(element, question) {
-                const allPoints = element.parentNode.querySelectorAll('.point');
-                allPoints.forEach(point => point.classList.remove('selected'));
-                element.classList.add('selected');
+// 初始設置第一個問題組為高亮
+document.addEventListener('DOMContentLoaded', () => {
+    showPage(currentPageIndex);
+    updateProgress(); // 初始化進度條
+});
 
-                let input = document.querySelector(`input[name="${question}"]`);
-                if (!input) {
-                    input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = question;
-                    document.getElementById('surveyForm').appendChild(input);
-                }
-                input.value = element.getAttribute('data-value');
-            }
+// 顯示當前的頁面
+function showPage(index) {
+    // 將所有頁面設置為淡出
+    pages.forEach((page, i) => {
+        if (i === index) {
+            // 當前頁面淡入並顯示
+            page.classList.add('active');
+        } else {
+            // 其他頁面淡出並隱藏
+            page.classList.remove('active');
+        }
+    });
+}
+
+// 下一頁的函數
+function nextPage() {
+    if (currentPageIndex < pages.length - 1) {
+        // 移動到下一個頁面
+        currentPageIndex++;
+        showPage(currentPageIndex);
+        updateProgress(); // 更新進度條
+    }
+}
+
+    // 更新進度條
+    function updateProgress() {
+        const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+        document.getElementById('progress').style.width = `${progress}%`;
+    }
+
+    // 點擊選項時選擇該點
+    function selectPoint(element, question) {
+        // 移除當前選項的高亮
+        const allPoints = element.parentNode.querySelectorAll('.point');
+        allPoints.forEach(point => point.classList.remove('selected'));
+
+        // 高亮選中的選項
+        element.classList.add('selected');
+
+        // 將選擇的值存入表單中的隱藏輸入欄位
+        let input = document.querySelector(`input[name="${question}"]`);
+        if (!input) {
+            // 如果該輸入欄位不存在，創建一個
+            input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = question;
+            document.getElementById('surveyForm').appendChild(input);
+        }
+        // 更新輸入欄位的值
+        input.value = element.getAttribute('data-value');
+
+        // 移動到下一個問題，並將其高亮顯示
+        if (currentQuestionIndex < questionGroups.length - 1) {
+            nextQuestion();
+        }
+    }
+
+    // 將按鈕點擊事件附加到 "下一步" 按鈕
+    const nextButton = document.querySelector('button[type="button"]');
+    if (nextButton) {
+        nextButton.addEventListener('click', nextQuestion);
+    }
+
+    // 將點擊事件綁定到每個選項上
+    document.querySelectorAll('.point').forEach(point => {
+        point.addEventListener('click', function () {
+            const question = this.closest('.options-container').previousElementSibling.id;
+            selectPoint(this, question);
+        });
+    });
+};
 
     // 提交測驗函數
 function submitTest() {
@@ -662,8 +766,21 @@ function submitTest() {
     const formData = new FormData(document.getElementById("surveyForm"));
     const testData = {};
 
+   // 檢查是否所有問題都已回答
+    let allQuestionsAnswered = true;
+
     for (let [key, value] of formData.entries()) {
+        if (!value) {
+            allQuestionsAnswered = false;
+            break;
+        }
         testData[key] = parseInt(value);
+    }
+
+    if (!allQuestionsAnswered) {
+        alert("請回答所有問題後再提交測驗。");
+        submitButton.disabled = false; // 恢復提交按鈕
+        return;
     }
 
     // 題目加權設計
@@ -1066,29 +1183,75 @@ function getTruffleHunterDescription(priceScore, locationScore) {
     }
 
     // 顯示條狀圖
-    function displayBarChart(scores) {
-        const ctx = document.getElementById('barChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['口味', '價格', '健康', '地點'],
-                datasets: [{
-                    label: '因素得分',
-                    data: [scores.taste, scores.price, scores.health, scores.location],
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
+function displayBarChart(scores) {
+    const ctx = document.getElementById('barChart').getContext('2d');
+
+    // 檢查是否有已存在的圖表，避免重複創建圖表
+    if (window.myBarChart) {
+        window.myBarChart.destroy();
+    }
+
+    // 新建一個水平條狀圖
+    window.myBarChart = new Chart(ctx, {
+        type: 'horizontalBar', // 更改為水平條狀圖
+        data: {
+            labels: ['口味', '價格', '健康', '地點'],
+            datasets: [{
+                label: '因素得分',
+                data: [scores.taste, scores.price, scores.health, scores.location],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        suggestedMax: 7, // 最大分數是 7
+                        stepSize: 1 // 每個刻度增量
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: '得分'
+                    }
+                }],
+                yAxes: [{
+                    barPercentage: 0.5, // 調整條的寬度
+                    scaleLabel: {
+                        display: true,
+                        labelString: '因素'
+                    }
                 }]
             },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+            plugins: {
+                legend: {
+                    display: false // 隱藏圖例
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            return `${context.label}: ${context.raw}`;
+                        }
                     }
                 }
-            }
-        });
-    }
+            },
+            responsive: true,
+            maintainAspectRatio: false // 使圖表更加靈活
+        }
+    });
+}
 
     // 將函數附加到全域範圍
     window.selectPoint = selectPoint;
