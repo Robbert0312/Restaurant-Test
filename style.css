@@ -57,6 +57,14 @@ html {
     transform: scale(1);
 }
 
+.active {
+    display: block;
+}
+
+.inactive {
+    display: none;
+}
+
 /* 選項容器樣式 */
 .options-container {
     display: flex;
