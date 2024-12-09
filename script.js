@@ -454,6 +454,6 @@ function displayBarChart(scores) {
 
     // 將函數附加到全域範圍
     window.selectPoint = selectPoint;
-    window.nextPage = nextPage;
+    window.next = next;
     window.submitTest = submitTest;
 };
