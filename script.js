@@ -20,9 +20,10 @@ window.onload = function () {
     }
 });
 
-     function initializeApplication() {
+    function initializeApplication() {
     console.log('應用程式初始化中...');
-    // 這裡可以添加任何初始化邏輯，例如顯示第一個問題
+    showCurrent(); // 顯示當前問題
+    updateProgress(currentIndex, questionGroups.length); // 更新進度條
 }
     
       // 獲取所有的 '.point' 元素
@@ -30,16 +31,13 @@ window.onload = function () {
 
     // 為每個 '.point' 元素添加點擊事件監聽器
     points.forEach(point => {
-        point.addEventListener('click', function () {
-            // 獲取這個點所屬的問題 ID
-            const questionId = this.closest('.options-container').previousElementSibling?.id;
-
-            // 調用 selectPoint 函數，將點擊的點和問題 ID 作為參數傳遞
-            if (questionId) {
-                selectPoint(this, questionId);
-            }
-        });
+    point.addEventListener('click', function () {
+        const questionId = this.closest('.options-container').previousElementSibling?.id;
+        if (questionId) {
+            selectPoint(this, questionId);
+        }
     });
+});
       
     // 初始設置變量
     let currentIndex = 0;
@@ -105,6 +103,7 @@ window.onload = function () {
     }
     const progressPercentage = (currentIndex / totalQuestions) * 100;
     progressBar.style.width = progressPercentage + '%';
+    console.log(`Progress updated to ${progressPercentage}%`);
 }
 
     // 下一題的函數
@@ -186,6 +185,10 @@ function submitTest() {
     // 禁用提交按鈕以防止重複點擊
     const submitButton = document.querySelector('button[onclick="submitTest()"]');
     submitButton.disabled = true;
+     if (!allQuestionsAnswered) {
+    alert("請回答所有問題後再提交測驗。");
+    return;
+}
 
     // 取得表單數據
     const formData = new FormData(document.getElementById("surveyForm"));
