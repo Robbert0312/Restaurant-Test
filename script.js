@@ -19,6 +19,11 @@ window.onload = function () {
         console.error('找不到 progress-bar 元素');
     }
 });
+
+     function initializeApplication() {
+    console.log('應用程式初始化中...');
+    // 這裡可以添加任何初始化邏輯，例如顯示第一個問題
+}
     
       // 獲取所有的 '.point' 元素
     const points = document.querySelectorAll('.point');
@@ -92,11 +97,15 @@ window.onload = function () {
 }
 
     // 更新進度條
-    function updateProgress() {
-        const progress = ((currentIndex + 1) / totalQuestions) * 100;
-        document.getElementById('progress').style.width = `${progress}%`;
-        console.log('Progress updated to:', progress + '%'); // Debug: 更新進度條
+    function updateProgress(currentIndex, totalQuestions) {
+    const progressBar = document.getElementById('progress-bar');
+    if (!progressBar) {
+        console.error('找不到進度條元素 progress-bar');
+        return;
     }
+    const progressPercentage = (currentIndex / totalQuestions) * 100;
+    progressBar.style.width = progressPercentage + '%';
+}
 
     // 下一題的函數
     function next() {
