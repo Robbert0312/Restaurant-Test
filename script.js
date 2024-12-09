@@ -10,6 +10,15 @@ window.onload = function () {
             initializeApplication();  // 初始化應用程式，例如顯示第一個問題
         })
         .catch(error => console.error('載入 descriptions.json 出錯:', error));
+     
+     document.addEventListener('DOMContentLoaded', function() {
+    let progressBar = document.getElementById('progress-bar');
+    if (progressBar) {
+        progressBar.style.width = '50%';
+    } else {
+        console.error('找不到 progress-bar 元素');
+    }
+});
     
       // 獲取所有的 '.point' 元素
     const points = document.querySelectorAll('.point');
