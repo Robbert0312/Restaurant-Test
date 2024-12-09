@@ -61,6 +61,18 @@ window.onload = function () {
 
     // 顯示當前的問題或頁面
     function showCurrent() {
+    questionGroups.forEach((group, index) => {
+        group.classList.toggle('active', index === currentIndex);
+        group.classList.toggle('inactive', index !== currentIndex);
+    });
+}
+     if (index === currentIndex) {
+            group.style.display = 'block'; // 顯示當前問題
+        } else {
+            group.style.display = 'none'; // 隱藏其他問題
+        }
+    });
+}
     console.log('Showing current index:', currentIndex); // Debug: 當前顯示的問題或頁面索引
 
     // 更新問題組樣式
@@ -96,13 +108,18 @@ window.onload = function () {
 
     // 更新進度條
     function updateProgress(currentIndex, totalQuestions) {
-    const progressBar = document.getElementById('progress-bar');
-    if (!progressBar) {
-        console.error('找不到進度條元素 progress-bar');
+    if (totalQuestions === 0 || totalQuestions === undefined) {
+        console.error('Total questions is zero or undefined.');
         return;
     }
+
     const progressPercentage = (currentIndex / totalQuestions) * 100;
-    progressBar.style.width = progressPercentage + '%';
+    const progressBar = document.getElementById('progress-bar');
+    if (progressBar) {
+        progressBar.style.width = progressPercentage + '%';
+    } else {
+        console.error('Progress bar element not found.');
+    }
     console.log(`Progress updated to ${progressPercentage}%`);
 }
 
