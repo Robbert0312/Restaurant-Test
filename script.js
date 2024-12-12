@@ -62,17 +62,15 @@ window.onload = function () {
     // 顯示當前的問題或頁面
     function showCurrent() {
     questionGroups.forEach((group, index) => {
-        group.classList.toggle('active', index === currentIndex);
-        group.classList.toggle('inactive', index !== currentIndex);
-    });
-}
-     if (index === currentIndex) {
+        // 更新問題組的顯示與隱藏狀態
+        if (index === currentIndex) {
             group.style.display = 'block'; // 顯示當前問題
         } else {
             group.style.display = 'none'; // 隱藏其他問題
         }
     });
 }
+
     console.log('Showing current index:', currentIndex); // Debug: 當前顯示的問題或頁面索引
 
     // 更新問題組樣式
