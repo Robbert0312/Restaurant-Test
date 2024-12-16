@@ -366,7 +366,7 @@ function getResultDescription(highestFactors, scores) {
             // 恢復提交按鈕狀態
             submitButton.disabled = false;
         });
-}
+
     // 因素名稱翻譯
     function translateFactor(factor) {
         switch (factor) {
