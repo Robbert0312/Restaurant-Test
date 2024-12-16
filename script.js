@@ -102,7 +102,6 @@ window.onload = function () {
             page.classList.add('active');
         }
     });
-}
 
     // 更新進度條
     function updateProgress(currentIndex, totalQuestions) {
