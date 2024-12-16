@@ -2,23 +2,23 @@ let descriptions;  // 用來儲存描述資料的全域變數
 let resultDescription;
 
 window.onload = function () {
-     // Step 1: 載入 descriptions.json 文件
     fetch('descriptions.json')
         .then(response => response.json())
         .then(data => {
-            descriptions = data;  // 將描述資料存入全域變數 descriptions 中
-            initializeApplication();  // 初始化應用程式，例如顯示第一個問題
+            descriptions = data;
+            initializeApplication();
         })
         .catch(error => console.error('載入 descriptions.json 出錯:', error));
-     
-     document.addEventListener('DOMContentLoaded', function() {
+
     let progressBar = document.getElementById('progress-bar');
     if (progressBar) {
         progressBar.style.width = '50%';
     } else {
         console.error('找不到 progress-bar 元素');
     }
-});
+
+    initializeApplication();
+};
 
     function initializeApplication() {
     console.log('應用程式初始化中...');
@@ -128,7 +128,7 @@ window.onload = function () {
 
             currentIndex++;
             showCurrent();
-            updateProgress();
+            updateProgress(currentIndex, questionGroups.length);
         } else {
             console.log('Already at the last question/page.'); // Debug: 已經到達最後一個問題或頁面
         }
@@ -197,19 +197,11 @@ function getDescription(profession, scores) {
 
     // 提交測驗函數
 function submitTest() {
-    // 禁用提交按鈕以防止重複點擊
     const submitButton = document.querySelector('button[onclick="submitTest()"]');
     submitButton.disabled = true;
-     if (!allQuestionsAnswered) {
-    alert("請回答所有問題後再提交測驗。");
-    return;
-}
 
-    // 取得表單數據
     const formData = new FormData(document.getElementById("surveyForm"));
     const testData = {};
-
-   // 檢查是否所有問題都已回答
     let allQuestionsAnswered = true;
 
     for (let [key, value] of formData.entries()) {
@@ -222,7 +214,7 @@ function submitTest() {
 
     if (!allQuestionsAnswered) {
         alert("請回答所有問題後再提交測驗。");
-        submitButton.disabled = false; // 恢復提交按鈕
+        submitButton.disabled = false;
         return;
     }
 
@@ -292,10 +284,6 @@ function determineHighestFactors(scores) {
     let sortedFactors = Object.keys(scores).sort((a, b) => scores[b] - scores[a]);
     return sortedFactors.slice(0, 2); // 返回前兩個得分最高的因素
 }
-
-// 根據因素組合取得對應描述
-function getResultDescription(highestFactors) {
-    const [factor1, factor2] = highestFactors;
 
     // 根據因素組合取得對應描述
 function getResultDescription(highestFactors, scores) {
@@ -471,4 +459,3 @@ function displayBarChart(scores) {
     window.selectPoint = selectPoint;
     window.nextpage = next;
     window.submitTest = submitTest;
-};
